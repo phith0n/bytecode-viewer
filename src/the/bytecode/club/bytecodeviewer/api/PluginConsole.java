@@ -1,4 +1,4 @@
-package the.bytecode.club.bytecodeviewer.plugins;
+package the.bytecode.club.bytecodeviewer.api;
 
 import javax.swing.JFrame;
 
@@ -20,6 +20,7 @@ import the.bytecode.club.bytecodeviewer.BytecodeViewer;
  */
 
 public class PluginConsole extends JFrame {
+	
 	JTextArea textArea = new JTextArea();
 	public PluginConsole(String pluginName) {
     	this.setIconImages(BytecodeViewer.iconList);
@@ -32,9 +33,22 @@ public class PluginConsole extends JFrame {
 		scrollPane.setViewportView(textArea);
 		this.setLocationRelativeTo(null);
 	}
-	
+
+	/**
+	 * Appends \r\n to the end of your string, then it puts it on the top.
+	 * @param t the string you want to append
+	 */
 	public void appendText(String t) {
 		textArea.setText((textArea.getText().isEmpty() ? "" : textArea.getText()+"\r\n")+t);
+		textArea.setCaretPosition(0);
+	}
+	
+	/**
+	 * Sets the text
+	 * @param t the text you want set
+	 */
+	public void setText(String t) {
+		textArea.setText(t);
 		textArea.setCaretPosition(0);
 	}
 

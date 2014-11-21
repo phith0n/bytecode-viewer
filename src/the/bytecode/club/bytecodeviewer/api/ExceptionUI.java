@@ -1,4 +1,4 @@
-package the.bytecode.club.bytecodeviewer.gui;
+package the.bytecode.club.bytecodeviewer.api;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -14,12 +14,35 @@ import java.awt.Color;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class StackTraceUI extends JFrame {
+/**
+ * A simple class designed to show exceptions in the UI.
+ * 
+ * @author Konloch
+ *
+ */
+
+public class ExceptionUI extends JFrame {
+
+	/**
+	 * @param e The exception to be shown
+	 */
+	public ExceptionUI(Exception e) {
+		setup(e,"@Konloch");
+	}
 	
-	public StackTraceUI(Exception e) {
+	/**
+	 * @param e The exception to be shown
+	 * @param author the author of the plugin throwing this exception.
+	 */
+	public ExceptionUI(Exception e, String author) {
+		setup(e,author);
+	}
+	
+	private void setup(Exception e, String author) {
+
     	this.setIconImages(BytecodeViewer.iconList);
 		setSize(new Dimension(600, 400));
-		setTitle("Bytecode Viewer "+BytecodeViewer.version+" - Stack Trace - Send this to @Konloch.");
+		setTitle("Bytecode Viewer "+BytecodeViewer.version+" - Stack Trace - Send this to "+author);
 		getContentPane().setLayout(new CardLayout(0, 0));
 		
 		JTextArea txtrBytecodeViewerIs = new JTextArea();
