@@ -1,4 +1,4 @@
-package the.bytecode.club.bytecodeviewer.decompilers.java;
+package the.bytecode.club.bytecodeviewer.decompilers;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -96,9 +96,8 @@ public class ProcyonDecompiler extends JavaDecompiler {
 
 			String fileStart = BytecodeViewer.tempDirectory + BytecodeViewer.fs
 					+ "temp";
-			int fileNumber = getClassNumber(fileStart, ".class");
 
-			final File tempClass = new File(fileStart + fileNumber + ".class");
+			final File tempClass = new File(getUniqueName(fileStart, ".class") + ".class");
 
 			try {
 				final FileOutputStream fos = new FileOutputStream(tempClass);

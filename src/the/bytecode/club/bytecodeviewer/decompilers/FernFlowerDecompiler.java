@@ -1,4 +1,4 @@
-package the.bytecode.club.bytecodeviewer.decompilers.java;
+package the.bytecode.club.bytecodeviewer.decompilers;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,12 +60,10 @@ public class FernFlowerDecompiler extends JavaDecompiler {
 	public String decompileClassNode(final ClassNode cn) {
 		final ClassWriter cw = new ClassWriter(0);
 		cn.accept(cw);
-
-		String fileStart = BytecodeViewer.tempDirectory + BytecodeViewer.fs
-				+ "temp";
-		int fileNumber = getClassNumber(fileStart, ".class");
-
-		final File tempClass = new File(fileStart + fileNumber + ".class");
+		
+		String start = getUniqueName("", ".class");
+		
+		final File tempClass = new File(start + ".class");
 
 		try {
 			final FileOutputStream fos = new FileOutputStream(tempClass);
@@ -82,7 +80,7 @@ public class FernFlowerDecompiler extends JavaDecompiler {
 
 		tempClass.delete();
 
-		final File outputJava = new File("temp" + fileNumber + ".java");
+		final File outputJava = new File(start + ".java");
 		if (outputJava.exists()) {
 			String s;
 			try {
