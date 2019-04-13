@@ -28,44 +28,53 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.objectweb.asm.commons;
+package the.bytecode.club.bytecodeviewer.obfuscators.mapping;
 
 import org.objectweb.asm.AnnotationVisitor;
-import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.TypePath;
+import org.objectweb.asm.commons.Remapper;
 
 /**
- * A {@link FieldVisitor} adapter for type remapping.
+ * An {@link AnnotationVisitor} adapter for type remapping.
  *
  * @author Eugene Kuleshov
  */
-public class RemappingFieldAdapter extends FieldVisitor {
+public class RemappingAnnotationAdapter extends AnnotationVisitor {
 
-    private final Remapper remapper;
+    protected final org.objectweb.asm.commons.Remapper remapper;
 
-    public RemappingFieldAdapter(final FieldVisitor fv, final Remapper remapper) {
-        this(Opcodes.ASM5, fv, remapper);
+    public RemappingAnnotationAdapter(final AnnotationVisitor av,
+                                      final org.objectweb.asm.commons.Remapper remapper) {
+        this(Opcodes.ASM5, av, remapper);
     }
 
-    protected RemappingFieldAdapter(final int api, final FieldVisitor fv,
-                                    final Remapper remapper) {
-        super(api, fv);
+    protected RemappingAnnotationAdapter(final int api,
+                                         final AnnotationVisitor av, final Remapper remapper) {
+        super(api, av);
         this.remapper = remapper;
     }
 
     @Override
-    public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-        AnnotationVisitor av = fv.visitAnnotation(remapper.mapDesc(desc),
-                visible);
-        return av == null ? null : new RemappingAnnotationAdapter(av, remapper);
+    public void visit(String name, Object value) {
+        av.visit(name, remapper.mapValue(value));
     }
 
     @Override
-    public AnnotationVisitor visitTypeAnnotation(int typeRef,
-                                                 TypePath typePath, String desc, boolean visible) {
-        AnnotationVisitor av = super.visitTypeAnnotation(typeRef, typePath,
-                remapper.mapDesc(desc), visible);
-        return av == null ? null : new RemappingAnnotationAdapter(av, remapper);
+    public void visitEnum(String name, String desc, String value) {
+        av.visitEnum(name, remapper.mapDesc(desc), value);
+    }
+
+    @Override
+    public AnnotationVisitor visitAnnotation(String name, String desc) {
+        AnnotationVisitor v = av.visitAnnotation(name, remapper.mapDesc(desc));
+        return v == null ? null : (v == av ? this
+                : new RemappingAnnotationAdapter(v, remapper));
+    }
+
+    @Override
+    public AnnotationVisitor visitArray(String name) {
+        AnnotationVisitor v = av.visitArray(name);
+        return v == null ? null : (v == av ? this
+                : new RemappingAnnotationAdapter(v, remapper));
     }
 }

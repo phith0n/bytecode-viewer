@@ -28,7 +28,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.objectweb.asm.commons;
+package the.bytecode.club.bytecodeviewer.obfuscators.mapping;
 
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Handle;
@@ -36,6 +36,8 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.TypePath;
+import org.objectweb.asm.commons.LocalVariablesSorter;
+import org.objectweb.asm.commons.Remapper;
 
 /**
  * A {@link LocalVariablesSorter} for type mapping.
@@ -44,10 +46,10 @@ import org.objectweb.asm.TypePath;
  */
 public class RemappingMethodAdapter extends LocalVariablesSorter {
 
-    protected final Remapper remapper;
+    protected final org.objectweb.asm.commons.Remapper remapper;
 
     public RemappingMethodAdapter(final int access, final String desc,
-                                  final MethodVisitor mv, final Remapper remapper) {
+                                  final MethodVisitor mv, final org.objectweb.asm.commons.Remapper remapper) {
         this(Opcodes.ASM5, access, desc, mv, remapper);
     }
 

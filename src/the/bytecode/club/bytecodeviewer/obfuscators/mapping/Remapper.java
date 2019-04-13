@@ -28,7 +28,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.objectweb.asm.commons;
+package the.bytecode.club.bytecodeviewer.obfuscators.mapping;
 
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.Type;
@@ -48,7 +48,8 @@ import org.objectweb.asm.signature.SignatureWriter;
  *
  * @author Eugene Kuleshov
  */
-public abstract class Remapper {
+public abstract class Remapper extends org.objectweb.asm.commons.Remapper
+{
 
     public String mapDesc(String desc) {
         Type t = Type.getType(desc);

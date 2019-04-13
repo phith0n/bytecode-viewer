@@ -28,9 +28,10 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.objectweb.asm.commons;
+package the.bytecode.club.bytecodeviewer.obfuscators.mapping;
 
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.commons.Remapper;
 import org.objectweb.asm.signature.SignatureVisitor;
 
 /**
@@ -42,12 +43,12 @@ public class RemappingSignatureAdapter extends SignatureVisitor {
 
     private final SignatureVisitor v;
 
-    private final Remapper remapper;
+    private final org.objectweb.asm.commons.Remapper remapper;
 
     private String className;
 
     public RemappingSignatureAdapter(final SignatureVisitor v,
-                                     final Remapper remapper) {
+                                     final org.objectweb.asm.commons.Remapper remapper) {
         this(Opcodes.ASM5, v, remapper);
     }
 
